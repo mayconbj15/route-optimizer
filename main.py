@@ -2,18 +2,18 @@ import PySimpleGUI as sg
 
 from gui import quant
 
+import config
+
 #sg.theme(configs.theme)  # please make your creations colorful
 
 layoutInicial = [
     [sg.Button('Iniciar', key='_start', size=(62, 1))],
-    [sg.Button("Sobre o trabalho", size=(30, 1), key='_sobre'),
-        sg.Button("Como funciona?", size=(30, 1), key='_tutorial')],
     [sg.Exit()]
 ]
 
 # MAIN |=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 def main():
-    window = sg.Window('Processamento de Imagens', layoutInicial)
+    window = sg.Window(config.title, layoutInicial)
 
     while True:
         event, values = window.read()

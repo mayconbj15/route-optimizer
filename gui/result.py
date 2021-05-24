@@ -20,6 +20,9 @@ def telaInicial(tsp_result, addresses, distance_matrix):
 
     text = ""
     i=0
+    print(tsp_result)
+    print(addresses)
+    print(distance_matrix)
     while(i < len(tsp_result)-1):
         text += '{} -> {} Distance {} \n'.format(addresses[tsp_result[i]], addresses[tsp_result[i+1]], str(distance_matrix[tsp_result[i]][tsp_result[i+1]]))
         i+=1

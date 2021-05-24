@@ -16,7 +16,7 @@ def telaInicial():
     layout = [
         [sg.Text('Quantas cidade irá viajar?',
                  size=elements_col_size)],
-        [sg.Slider(range = (1, 10), orientation='horizontal', key="_slider")],
+        [sg.Slider(range = (3, 10), orientation='horizontal', key="_slider")],
         [sg.Button('BORA', size=elements_col_size,
                    key="_calc")],
         [sg.Exit()]
