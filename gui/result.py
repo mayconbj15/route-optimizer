@@ -1,9 +1,12 @@
 import PySimpleGUI as sg
+import networkx as nx
+import matplotlib.pyplot as plt
 
-import tsp
+import graph
+import config
 
 from gui import quant
-import config
+
 
 elements_col_size = (50, 0)
 zoom_buttons_size = (24, 0)
@@ -34,8 +37,15 @@ def telaInicial(tsp_result, addresses, distance_matrix):
 
     window = sg.Window(config.title, layout)
 
-    printResult(tsp_result, addresses)
+    G = graph.main(tsp_result, addresses, distance_matrix)
     
+    val_map = {addresses[tsp_result[0]]: 0.0}
+
+    values = [val_map.get(node, 0.5) for node in G.nodes()]
+    nx.draw_networkx(G, with_labels = True, node_size=500, node_color = values)
+    plt.show()
+
+    printResult(tsp_result, addresses)
     
     while (True):
         # event é uma ação e values é uma lista de dados
@@ -43,6 +53,7 @@ def telaInicial(tsp_result, addresses, distance_matrix):
 
         if event == '_calc':
             window.close()
+            plt.close()
             quant.telaInicial()
 
         elif event == sg.WIN_CLOSED or event == 'Exit':
