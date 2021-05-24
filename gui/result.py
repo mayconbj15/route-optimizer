@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 
 import tsp
 
-from gui import addresses
+from gui import quant
 import config
 
 elements_col_size = (50, 0)
@@ -29,22 +29,21 @@ def telaInicial(tsp_result, addresses, distance_matrix):
         
     layout.append([sg.Text(text, size=elements_col_size)])
 
-    #layout.append([sg.Graph((500,500),(0,0),(300,300))])
+    layout.append([sg.Button('Nova entrada de dados', size=elements_col_size,key="_calc")])
+    layout.append([sg.Exit()])
 
     window = sg.Window(config.title, layout)
 
     printResult(tsp_result, addresses)
     
-    layout.append([sg.Exit()])
+    
     while (True):
         # event é uma ação e values é uma lista de dados
         event, values = window.read()
 
         if event == '_calc':
-            quant_addresses = window['_slider'].TKScale.get()
-            print(quant_addresses)
             window.close()
-            addresses.telaInicial(quant_addresses)
+            quant.telaInicial()
 
         elif event == sg.WIN_CLOSED or event == 'Exit':
             break

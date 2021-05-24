@@ -67,7 +67,6 @@ def send_request(gmaps, origin_addresses, dest_addresses):
 def main(adresses):
     """Entry point of the program"""
     # Create the data.
-    adresses = ['Belo horizonte', 'Contagem', 'Betim']
     data = create_data(adresses)
     distance_matrix = create_distance_matrix(data)
     #print(distance_matrix)

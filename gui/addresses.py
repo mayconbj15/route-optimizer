@@ -45,6 +45,7 @@ def telaInicial(n_addresses):
             calc = tsp.TSP()
             tsp_result = calc.run(distance_matrix)
             
+            window.close()
             result.telaInicial(tsp_result, addresses, distance_matrix)
 
         elif event == sg.WIN_CLOSED or event == 'Exit':
