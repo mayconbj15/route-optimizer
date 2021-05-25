@@ -2,9 +2,11 @@ import PySimpleGUI as sg
 
 import tsp
 import distances
-
-from gui import result
 import config
+
+from gui import initialCity
+from gui import result
+
 
 elements_col_size = (50, 0)
 zoom_buttons_size = (24, 0)
@@ -39,14 +41,8 @@ def telaInicial(n_addresses):
                 addresses.append(values['city' + str(i)])
             
             print(addresses)
-
-            distance_matrix = distances.main(addresses)
-    
-            calc = tsp.TSP()
-            tsp_result = calc.run(distance_matrix)
-            
             window.close()
-            result.telaInicial(tsp_result, addresses, distance_matrix)
+            initialCity.telaInicial(addresses)
 
         elif event == sg.WIN_CLOSED or event == 'Exit':
             break

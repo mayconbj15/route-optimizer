@@ -4,12 +4,13 @@ from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 
 class TSP:
-    def __create_data_model(self, distance_matrix):
+    def __create_data_model(self, distance_matrix, initial):
         """Stores the data for the problem."""
         data = {}
         data['distance_matrix'] = distance_matrix
         data['num_vehicles'] = 1
-        data['depot'] = 0
+        data['depot'] = initial
+
         return data
 
 
@@ -36,10 +37,10 @@ class TSP:
         return route
 
 
-    def run(self, distance_matrix):
+    def run(self, distance_matrix, initial):
         """Entry point of the program."""
         # Instantiate the data problem.
-        data = self.__create_data_model(distance_matrix)
+        data = self.__create_data_model(distance_matrix, initial)
 
         # Create the routing index manager.
         manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),

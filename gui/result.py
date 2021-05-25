@@ -12,7 +12,7 @@ elements_col_size = (50, 0)
 zoom_buttons_size = (24, 0)
 
 
-def telaInicial(tsp_result, addresses, distance_matrix):
+def telaInicial(tsp_result, addresses, distance_matrix, initial):
     #sg.theme(configs.theme)  # please make your windows colorful
 
     layout = [
@@ -26,6 +26,7 @@ def telaInicial(tsp_result, addresses, distance_matrix):
     print(tsp_result)
     print(addresses)
     print(distance_matrix)
+    print(initial)
     while(i < len(tsp_result)-1):
         text += '{} -> {} Distance {} \n'.format(addresses[tsp_result[i]], addresses[tsp_result[i+1]], str(distance_matrix[tsp_result[i]][tsp_result[i+1]]))
         i+=1
@@ -37,12 +38,10 @@ def telaInicial(tsp_result, addresses, distance_matrix):
 
     window = sg.Window(config.title, layout)
 
-    G = graph.main(tsp_result, addresses, distance_matrix)
+    G, colors = graph.main(tsp_result, addresses, distance_matrix, initial)
     
-    val_map = {addresses[tsp_result[0]]: 0.0}
-
-    values = [val_map.get(node, 0.5) for node in G.nodes()]
-    nx.draw_networkx(G, with_labels = True, node_size=500, node_color = values)
+    nx.draw_networkx(G, with_labels = True, node_size=500, arrowsize=30, node_color = colors, cmap = plt.cm.BrBG)
+    nx.draw_networkx_edge_labels(G, pos=nx.spring_layout(G))
     plt.show()
 
     printResult(tsp_result, addresses)
