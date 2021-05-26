@@ -16,7 +16,7 @@ def telaInicial(n_addresses):
     #sg.theme(configs.theme)  # please make your windows colorful
 
     layout = [
-        [sg.Text('Adicione as cidades que irá viajar',
+        [sg.Text('Adicione os endereços que irá visitar',
                  size=elements_col_size)],
         
     ]

@@ -19,15 +19,23 @@ def getInitial(addresses, values):
     
     return initial
 
+def getUnit(values):
+    if values['_unit0']:
+        return 'duration'
+    else:
+        return 'distance'
+
 def telaInicial(addresses):
     #sg.theme(configs.theme)  # please make your windows colorful
 
     layout = [
-        [sg.Text('Qual cidade deseja iniciar a sua viagem',
-                 size=elements_col_size)],
-        
+        [sg.Text('Você deseja otimizar?',
+                 size=elements_col_size)]
     ]
-
+    layout.append([sg.Radio('Tempo','Unit',default = True, disabled = False, key='_unit0')])
+    layout.append([sg.Radio('Distância','Unit',default = False, disabled = False, key='_unit1')])
+    
+    layout.append([sg.Text('Qual endereço deseja iniciar a sua viagem',size=elements_col_size)])
     layout.append([sg.Radio(addresses[0],'City',default = True, disabled = False, key='_radio0')])
     for i in range(1, len(addresses)):
         layout.append([sg.Radio(addresses[i],'City',default = False, disabled = False, key='_radio{}'.format(i))])
@@ -35,8 +43,6 @@ def telaInicial(addresses):
     layout.append([sg.Button('BORA', size=elements_col_size,
                    key="_calc")])
 
-    layout.append([sg.Button('Debug', size=elements_col_size,
-                   key="_debug")])
     layout.append([sg.Exit()])
 
     window = sg.Window(config.title, layout)
@@ -48,7 +54,7 @@ def telaInicial(addresses):
         if event == '_calc':
             print(addresses)
 
-            distance_matrix = distances.main(addresses)
+            distance_matrix = distances.main(addresses, getUnit(values))
 
             initial = getInitial(addresses, values)
             calc = tsp.TSP()

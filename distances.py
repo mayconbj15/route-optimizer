@@ -13,7 +13,7 @@ def create_data(adresses):
 
     return data
 
-def create_distance_matrix(addresses):
+def create_distance_matrix(addresses, unit):
     # Distance Matrix API only accepts 100 elements per request, so get rows in multiple requests.
     max_elements = 100
     num_addresses = len(addresses) # 16 in this example.
@@ -30,20 +30,20 @@ def create_distance_matrix(addresses):
     for i in range(q):
         origin_addresses = addresses[i * max_rows: (i + 1) * max_rows]
         response = send_request(gmaps, origin_addresses, dest_addresses)
-        distance_matrix += build_distance_matrix(response)
+        distance_matrix += build_distance_matrix(response, unit)
 
     # Get the remaining remaining r rows, if necessary.
     if r > 0:
         origin_addresses = addresses[q * max_rows: q * max_rows + r]
         response = send_request(gmaps, origin_addresses, dest_addresses)
-        distance_matrix += build_distance_matrix(response)
+        distance_matrix += build_distance_matrix(response, unit)
     
     return distance_matrix
 
-def build_distance_matrix(response):
+def build_distance_matrix(response, unit):
     distance_matrix = []
     for row in response['rows']:
-        row_list = [row['elements'][j]['distance']['value'] for j in range(len(row['elements']))]
+        row_list = [row['elements'][j][unit]['value'] for j in range(len(row['elements']))]
         distance_matrix.append(row_list)
     return distance_matrix
 
@@ -64,11 +64,12 @@ def send_request(gmaps, origin_addresses, dest_addresses):
     
     return directions_result
 
-def main(adresses):
+def main(adresses, unit):
     """Entry point of the program"""
     # Create the data.
+    #print(unit)
     data = create_data(adresses)
-    distance_matrix = create_distance_matrix(data)
+    distance_matrix = create_distance_matrix(data, unit)
     #print(distance_matrix)
 
     return distance_matrix
